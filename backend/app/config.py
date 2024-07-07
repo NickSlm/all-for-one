@@ -11,3 +11,4 @@ DB_PORT= os.getenv("MONGO_PORT")
 MONGO_URI = f"mongodb+srv://{DB_USERNAME}:{DB_PASSWORD}@{DB_NAME}.l4ry07b.mongodb.net/?retryWrites=true&w=majority&appName={DB_NAME}"
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+

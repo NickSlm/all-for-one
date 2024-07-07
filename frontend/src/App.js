@@ -1,36 +1,29 @@
-import logo from './logo.svg';
-import React, {userState, useEffect, useState} from "react";
-import {BrowserRouter, Routes, Route, Link} from "react-dom";
+import React, {useEffect, useState} from "react";
+import {BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import './App.css';
+import Home from "./components/Home"
+import LoginPage from "./components/Login"
+import Register from "./components/Signup"
+import Profile from "./components/profile";
+import PrivateRoute from "./components/PrivateRoute";
+
 
 function App() {
-  const [data, setdata] = useState({
-    name: "",
-    date: "",
-  });
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    fetch("/get_time").then((res) => 
-      res.json().then((data) => {
-        setdata({
-          name: data.Name,
-          date: data.Date,
-        });
-      })
-    );
-  }, []);
 
   return (
-    <div className="App">
-    <header className="App-header">
-      <h1>React and flask</h1>
-      {/* Calling a data from setdata for showing */}
-      <p>{data.name}</p>
-      <p>{data.date}</p>
-    </header>
-  </div>
-  )
-  
+      <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>
+            <Route path="/logout"/>
+        </Routes>
+      </BrowserRouter>
+
+  );
 }
 
 export default App;
