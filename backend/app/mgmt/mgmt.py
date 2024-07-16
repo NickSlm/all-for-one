@@ -1,11 +1,32 @@
 from flask import Blueprint, jsonify, session
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt, set_access_cookies
+from datetime import datetime, timedelta, timezone
+import json
 
 mgmt_bp = Blueprint("mgmt_bp", __name__)
 
+
+@mgmt_bp.after_request
+def refresh_expiring_jwts(response):
+    try:
+        print("refreshing")
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=2))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["access_token"] = access_token
+                response.data = json.dumps(data)
+        return response
+    except (RuntimeError, KeyError):
+        return response
+    
 @mgmt_bp.route('/profile', methods=["GET"])
 @jwt_required()
 def profile():
-    current_user = get_jwt_identity()
-    return jsonify(current_user)
+    response_body = {
+        "username": get_jwt_identity()
+    }
+    return response_body

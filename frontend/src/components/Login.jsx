@@ -3,7 +3,7 @@ import React, {useState}  from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function LoginPage(){
+function LoginPage(props){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -15,16 +15,17 @@ function LoginPage(){
         password: password
       })
       .then(function (response){
-        localStorage.setItem("access_token", response.data.access_token)
-        localStorage.setItem("refresh_token", response.data.refresh_token)
-        localStorage.setItem("username", response.data.username)
+        props.setToken(response.data.access_token)
+        localStorage.setItem("refreshToken", response.data.refresh_token)
         navigate('/')
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        }
       })
-      .catch(function (error) {
-        console.log(error, "error");
-        if (error.response.status === 401)
-          alert(error.response.data.error)
-      })
+
     };
       
     return (

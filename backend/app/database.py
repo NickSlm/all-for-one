@@ -2,7 +2,9 @@ import os
 from pymongo.mongo_client import MongoClient
 import hashlib
 import config
-
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
 
 client = MongoClient(config.MONGO_URI)
 try:
@@ -39,7 +41,21 @@ def create_user(username, password):
     collection.insert_one({"username": username,
                             "hash": hash,
                             "salt": salt})
-
-
+    
 def get_user(user_id):
     return collection.find_one({"_id": user_id})["username"]
+
+
+def upload_image(username, n_images):
+    images = generate_image(n_images)
+    query = {"username": username}
+    new_values = {"$set": {"images":[image for image in images]}}
+    collection.update_one(query, new_values)
+        
+def generate_image(n_images):
+    dir_path = "/home/nick/all-for-one/backend/models/models"
+    file_name = "myGan.h5"
+    gen = keras.models.load_model(os.path.join(dir_path, file_name))
+    latent_dim = tf.random.normal(shape=[n_images, 100])
+    generated_images = gen(latent_dim).numpy()
+    return generated_images

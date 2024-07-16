@@ -29,7 +29,7 @@ function Home(){
       hasJWT() ?
       <div>
        <div>
-        <div>{username}</div>
+       <p>{localStorage.getItem("token")}</p>
         <button onClick={logoutUser}>Logout</button>
        </div>
       </div>:
