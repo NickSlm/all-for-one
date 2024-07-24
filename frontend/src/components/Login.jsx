@@ -17,12 +17,10 @@ function LoginPage(props){
       .then(function (response){
         props.setToken(response.data.access_token)
         localStorage.setItem("refreshToken", response.data.refresh_token)
-        navigate('/')
+        navigate('/profile')
       }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+        if (error.response.status === 401) {
+          alert("bad cred")
         }
       })
 
@@ -41,7 +39,7 @@ function LoginPage(props){
             <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <div>
-          <button type="button" onClick={handleLogin}>submit</button>
+          <button type="button" onClick={handleLogin}>Login</button>
           </div>
         </form>
       </div>

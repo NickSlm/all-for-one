@@ -6,6 +6,7 @@ import api from "./api";
 function Profile(){
     
   const [user, setUser] = useState(null);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -20,6 +21,20 @@ function Profile(){
     fetchProfile();
   },[]);
 
+  const generateImage = async() => {
+    try {
+      const response = await api.get('/profile/gen-image', {
+        responseType: 'blob',
+      });
+      const url = URL.createObjectURL(response.data);
+      setImageSrc(url);
+    } 
+    catch (error) {
+      console.log(error)
+    }
+
+  };
+
 
   if (!user){
     return <div>Loading...</div>;
@@ -27,7 +42,12 @@ function Profile(){
 
   return (
     <div>
-      <h1>{user.username}</h1>
+      <div><h1>Hello: {user.username}</h1></div>
+      <div><button type="button" onClick={generateImage}>Generate</button>
+      <button>Save</button>
+      <button>Export</button></div>
+      <div><img src={imageSrc} style={{ width: '64px', height: 'auto' }}/></div>
+      
     </div>
       
   );

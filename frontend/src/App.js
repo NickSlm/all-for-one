@@ -16,7 +16,7 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home removeToken={removeToken}/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<LoginPage setToken={setToken} />} />
             <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>

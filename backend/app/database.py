@@ -1,10 +1,16 @@
 import os
 from pymongo.mongo_client import MongoClient
+import matplotlib.pyplot as plt
 import hashlib
 import config
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+from bson.binary import Binary
+from PIL import Image as im
+import pickle
+
+
 
 client = MongoClient(config.MONGO_URI)
 try:
@@ -15,7 +21,6 @@ except Exception as e:
    
 db = client.mydatabase
 collection = db.users
-
 
 def authorization(username, password):
     user = collection.find_one({"username": username})
@@ -45,17 +50,16 @@ def create_user(username, password):
 def get_user(user_id):
     return collection.find_one({"_id": user_id})["username"]
 
-
-def upload_image(username, n_images):
-    images = generate_image(n_images)
-    query = {"username": username}
-    new_values = {"$set": {"images":[image for image in images]}}
-    collection.update_one(query, new_values)
-        
-def generate_image(n_images):
-    dir_path = "/home/nick/all-for-one/backend/models/models"
-    file_name = "myGan.h5"
-    gen = keras.models.load_model(os.path.join(dir_path, file_name))
-    latent_dim = tf.random.normal(shape=[n_images, 100])
-    generated_images = gen(latent_dim).numpy()
-    return generated_images
+# def upload_image(username, n_images):
+#     images = generate_image(n_images)
+#     b_images = [Binary(pickle.dumps(image)) for image in images]
+#     query = {"username": username}
+#     update = {"$push": {"images":{'$each': b_images}}}
+#     collection.update_one(query, update)
+      
+def get_user_images(username):
+    user_data = collection.find_one({"username":username})
+    user_images = user_data["images"]
+    images = [pickle.loads(image) for image in user_images]
+    return images
+    
