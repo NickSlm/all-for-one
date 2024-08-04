@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import hasJWT from './JWT';
+import hasJWT from '../api/JWT';
 import axios from 'axios';
+import MainLayout from './Layout';
 
 function Home(){
     const [username, setUsername] = useState('None');
@@ -20,27 +21,32 @@ function Home(){
       })
       .then(function (response){
         alert(response.data.msg)
-        localStorage.clear("access_token")
+        localStorage.clear("token")
+        localStorage.clear("username")
+        localStorage.clear("refreshToken")
         navigate("/")
       })
     };
 
     return (
-      hasJWT() ?
-      <div>
-       <div>
-       <p>{localStorage.getItem("token")}</p>
-        <button onClick={logoutUser}>Logout</button>
-       </div>
-      </div>:
-      <div>
-        <div>
-          <button onClick={loginPage}>Login</button>
-          <button onClick={regPage}>Signup</button>
-        </div>
-      </div>
-
-    );
+      <MainLayout>
+          {hasJWT() ? (
+              <div>
+                  <div>
+                      <p>{localStorage.getItem("token")}</p>
+                      <button onClick={logoutUser}>Logout</button>
+                  </div>
+              </div>
+          ) : (
+              <div>
+                  <div>
+                      <button onClick={loginPage}>Login</button>
+                      <button onClick={regPage}>Signup</button>
+                  </div>
+              </div>
+          )}
+      </MainLayout>
+  );
 }
 
 export default Home;

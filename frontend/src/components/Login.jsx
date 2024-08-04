@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useState}  from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import MainLayout from './Layout';
 
 function LoginPage(props){
     const [username, setUsername] = useState('')
@@ -17,6 +17,7 @@ function LoginPage(props){
       .then(function (response){
         props.setToken(response.data.access_token)
         localStorage.setItem("refreshToken", response.data.refresh_token)
+        localStorage.setItem("username", username)
         navigate('/profile')
       }).catch((error) => {
         if (error.response.status === 401) {
@@ -27,8 +28,8 @@ function LoginPage(props){
     };
       
     return (
-      
-      <div>
+      <MainLayout>
+        <div>
         <form>
           <div>
             <label>Username:</label>
@@ -43,6 +44,7 @@ function LoginPage(props){
           </div>
         </form>
       </div>
+      </MainLayout>
       );
 }
 

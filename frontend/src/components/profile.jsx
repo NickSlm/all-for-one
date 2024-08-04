@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
-import api from "./api";
-// import {useNavigate } from "react-router-dom";
+import api from "../api/api";
+import "./style.css"
+import MainLayout from "./Layout";
+
 
 function Profile(){
     
   const [user, setUser] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -41,14 +43,15 @@ function Profile(){
   }
 
   return (
-    <div>
-      <div><h1>Hello: {user.username}</h1></div>
-      <div><button type="button" onClick={generateImage}>Generate</button>
-      <button>Save</button>
-      <button>Export</button></div>
-      <div><img src={imageSrc} style={{ width: '64px', height: 'auto' }}/></div>
-      
-    </div>
+    <MainLayout>
+      <div>
+        <div><button type="button" onClick={generateImage}>Generate</button>
+        <button>Save</button>
+        <button>Export</button></div>
+        <div><img src={imageSrc} style={{ width: '64px', height: 'auto' }}/></div>
+      </div>
+    </MainLayout>
+    
       
   );
   

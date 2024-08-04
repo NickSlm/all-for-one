@@ -5,8 +5,8 @@ import Home from "./components/Home"
 import LoginPage from "./components/Login"
 import Register from "./components/Signup"
 import Profile from "./components/profile";
-import PrivateRoute from "./components/PrivateRoute";
-import useToken from "./components/useToken";
+import PrivateRoute from "./api/PrivateRoute";
+import useToken from "./api/useToken";
 
 
 function App() {
@@ -16,11 +16,10 @@ function App() {
   return (
       <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Home removeToken={removeToken}/>}/>
+            <Route index element={<Home removeToken={removeToken}/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<LoginPage setToken={setToken} />} />
             <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>
-            <Route path="/logout"/>
         </Routes>
       </BrowserRouter>
 
