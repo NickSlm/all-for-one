@@ -32,14 +32,3 @@ def profile():
         "username": get_jwt_identity()
     }
     return response_body
-
-
-@mgmt_bp.route('/profile/gen-image', methods=["GET","POST"])
-@jwt_required()
-def gen_image():
-    n_images = request.json["n_images"]
-    print(n_images)
-    image = generate_image()
-    return send_file(image, mimetype='image/jpeg')
-    
-    

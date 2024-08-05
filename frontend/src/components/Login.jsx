@@ -18,7 +18,7 @@ function LoginPage(props){
         props.setToken(response.data.access_token)
         localStorage.setItem("refreshToken", response.data.refresh_token)
         localStorage.setItem("username", username)
-        navigate('/profile')
+        navigate('/')
       }).catch((error) => {
         if (error.response.status === 401) {
           alert("bad cred")

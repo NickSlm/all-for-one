@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate } from "react-router-dom";
+import MainLayout from "./Layout";
 
 
 function Register(){
@@ -28,21 +29,22 @@ function Register(){
 
 
     return (
-      <div>
-        <form>
-          <div>
-            <label>Username:  </label>
-            <input type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
-          </div>
-          <div>
-            <label>Password: </label>
-            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-          </div>
-          <div>
-          <button type="button" onClick={handleSignup}>submit</button>
-          </div>
-        </form>
-      </div>
+      <MainLayout><div>
+      <form>
+        <div>
+          <label>Username:  </label>
+          <input type='text' value={username} onChange={(e) => setUsername(e.target.value)}/>
+        </div>
+        <div>
+          <label>Password: </label>
+          <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+        </div>
+        <div>
+        <button type="button" onClick={handleSignup}>submit</button>
+        </div>
+      </form>
+    </div></MainLayout>
+      
     );
     
 }

@@ -44,12 +44,7 @@ function Profile(){
 
   return (
     <MainLayout>
-      <div>
-        <div><button type="button" onClick={generateImage}>Generate</button>
-        <button>Save</button>
-        <button>Export</button></div>
-        <div><img src={imageSrc} style={{ width: '64px', height: 'auto' }}/></div>
-      </div>
+      <a>Account</a>
     </MainLayout>
     
       
