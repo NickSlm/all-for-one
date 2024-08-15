@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, session,request, send_file
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt, set_access_cookies
 from datetime import datetime, timedelta, timezone
-from models import generate_image
 import json
 
 mgmt_bp = Blueprint("mgmt_bp", __name__)

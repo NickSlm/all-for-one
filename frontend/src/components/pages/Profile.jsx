@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from "react";
-import api from "../api/api";
+import api from "../../api/api";
 import "./style.css"
+import { CircularProgress } from "@mui/material";
 import MainLayout from "./Layout";
 
 
 function Profile(){
     
   const [user, setUser] = useState(null);
-  const [imageSrc, setImageSrc] = useState('');
 
 
   useEffect(() => {
@@ -23,23 +23,8 @@ function Profile(){
     fetchProfile();
   },[]);
 
-  const generateImage = async() => {
-    try {
-      const response = await api.get('/profile/gen-image', {
-        responseType: 'blob',
-      });
-      const url = URL.createObjectURL(response.data);
-      setImageSrc(url);
-    } 
-    catch (error) {
-      console.log(error)
-    }
-
-  };
-
-
   if (!user){
-    return <div>Loading...</div>;
+    return <div><CircularProgress/></div>;
   }
 
   return (

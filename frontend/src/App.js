@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import './App.css';
-import Home from "./components/Home"
-import LoginPage from "./components/Login"
-import Profile from "./components/Profile"
-import Register from "./components/Signup"
-import Generate from "./components/Generate";
+import Home from "./components/pages/Home"
+import LoginPage from "./components/pages/Login"
+import Profile from "./components/pages/Profile"
+import Register from "./components/pages/Signup"
+import Generate from "./components/pages/Generate";
 import PrivateRoute from "./api/PrivateRoute";
 import useToken from "./api/useToken";
 

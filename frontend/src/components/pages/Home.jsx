@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import hasJWT from '../api/JWT';
+import hasJWT from '../../api/JWT';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 import MainLayout from './Layout';

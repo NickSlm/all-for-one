@@ -4,7 +4,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from flask_cors import CORS
 from auth.auth  import auth_bp
 from general.home import home_bp
-from general.generate_image import generate_image_bp
+from imageGenerator.generate_image import generate_image_bp
 from mgmt.mgmt import mgmt_bp
 from models import jwt
 from config import SECRET_KEY
