@@ -109,8 +109,8 @@ const MainLayout = ({children}) => {
                         }}
                         >
                         {Object.keys(profile_routes).map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                <Typography component={Link} to={profile_routes[page]} textAlign="center">
+                            <MenuItem key={page} component={Link} to={profile_routes[page]} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">
                                     {page}
                                 </Typography>
                             </MenuItem>

@@ -1,27 +1,27 @@
 import axios from 'axios';
 import React, {useState}  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import MainLayout from './Layout';
 import "./style.css"
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@mui/material';
+import { Avatar, Button, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
-import {createTheme, ThemeProvider} from "@mui/material/styles";
+
 
 function LoginPage(props){
-    const [username, setUsername] = useState('')
+    const [emailAddress, setEmailAddress] = useState('')
     const [password, setPassword] = useState('')
 
     const navigate = useNavigate();
 
     const handleLogin = async() => {
       axios.post("http://localhost:5000/login", {
-        username: username,
+        emailAddress: emailAddress,
         password: password
       })
       .then(function (response){
         props.setToken(response.data.access_token)
         localStorage.setItem("refreshToken", response.data.refresh_token)
-        localStorage.setItem("username", username)
+        localStorage.setItem("emailAddress", response.data.user)
         navigate('/')
       }).catch((error) => {
         if (error.response.status === 401) {
@@ -46,7 +46,7 @@ function LoginPage(props){
                         <LockIcon />
                     </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign in
+                  Sign In
                 </Typography>
                 <TextField
                   margin="normal"
@@ -57,8 +57,8 @@ function LoginPage(props){
                   name="email"
                   autoComplete="email"
                   autoFocus
-                  value={username} 
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={emailAddress} 
+                  onChange={(e) => setEmailAddress(e.target.value)}
                 />
               <TextField
                 margin="normal"
@@ -81,6 +81,9 @@ function LoginPage(props){
                 >
                   Sign In
                 </Button>
+                <Link to="/register">
+                {"Don't have an account? Sign Up"}
+                </Link>
               </Box>
             </Container>
       </MainLayout>

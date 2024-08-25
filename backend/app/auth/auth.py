@@ -7,27 +7,30 @@ auth_bp = Blueprint("auth_bp", __name__)
 
 @auth_bp.route('/register', methods=["POST"])
 def signup():
-    username = request.json["username"]
+    emailAddress = request.json["emailAddress"]
     password = request.json["password"]
-    if check_if_exists(username):
-        return jsonify({"error": "Username already exists"}), 200
+    firstName = request.json["firstName"]
+    lastName = request.json["lastName"]
     
-    create_user(username, password)
-    return jsonify({"username": username}), 200
+    if check_if_exists(emailAddress):
+        return jsonify({"error": "This Email is already in use"}), 200
+    
+    create_user(emailAddress, password, firstName, lastName)
+    return jsonify({"emailAddress": emailAddress}), 200
        
 @auth_bp.route('/login', methods=["POST"])
 def login():
-    username = request.json["username"]
+    emailAddress = request.json["emailAddress"]
     password = request.json["password"]
-    if not check_if_exists(username):
+    if not check_if_exists(emailAddress):
         return jsonify({"msg": "user does not exist"}), 401
     
-    if authorization(username, password):
-        access_token = create_access_token(identity=username)
-        refresh_token = create_refresh_token(identity=username)
+    if authorization(emailAddress, password):
+        access_token = create_access_token(identity=emailAddress)
+        refresh_token = create_refresh_token(identity=emailAddress)
         response = {"access_token": access_token,
                     "refresh_token": refresh_token,
-                    "user": username}
+                    "user": emailAddress}
         return response
     else:
         return jsonify({"msg": "Invalid Credentials"}), 401

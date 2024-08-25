@@ -22,8 +22,8 @@ except Exception as e:
 db = client.mydatabase
 collection = db.users
 
-def authorization(username, password):
-    user = collection.find_one({"username": username})
+def authorization(emailAddress, password):
+    user = collection.find_one({"emailAddress": emailAddress})
     u_hash = user["hash"]
     u_salt = user["salt"]
     
@@ -32,8 +32,8 @@ def authorization(username, password):
     
     return True if h_password.hexdigest() == u_hash else False
 
-def check_if_exists(username):
-    return True if collection.find_one({"username": username}) else False
+def check_if_exists(emailAddress):
+    return True if collection.find_one({"emailAddress": emailAddress}) else False
 
 def _create_password(password):
     salt = str(os.urandom(16))
@@ -41,9 +41,11 @@ def _create_password(password):
     hash_pwd = hashlib.md5(pwd.encode())
     return hash_pwd.hexdigest(), str(salt)
 
-def create_user(username, password):
+def create_user(emailAddress, password, firstName, lastName):
     hash, salt = _create_password(password)
-    collection.insert_one({"username": username,
+    collection.insert_one({"emailAddress": emailAddress,
+                            "firstName": firstName,
+                            "lastName": lastName,
                             "hash": hash,
                             "salt": salt})
     
@@ -57,8 +59,8 @@ def get_user(user_id):
 #     update = {"$push": {"images":{'$each': b_images}}}
 #     collection.update_one(query, update)
       
-def get_user_images(username):
-    user_data = collection.find_one({"username":username})
+def get_user_images(emailAddress):
+    user_data = collection.find_one({"emailAddress":emailAddress})
     user_images = user_data["images"]
     images = [pickle.loads(image) for image in user_images]
     return images
