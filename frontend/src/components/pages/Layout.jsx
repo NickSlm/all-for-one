@@ -10,13 +10,10 @@ import AdbIcon from '@mui/icons-material/Adb'
 
 const routes = {
     Generate: "/generate-image",
+    Models:"/models",
     FAQ: "/FAQ"
 }
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const profile_routes = {
-    Generate: "/generate-image",
-    FAQ: "/FAQ"
-}
 
 const MainLayout = ({children}) => {
 
@@ -64,8 +61,8 @@ const MainLayout = ({children}) => {
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                        component={Link}
+                        to="/"
                         sx={{
                         mr: 2,
                         display: { xs: 'none', md: 'flex' },
@@ -108,8 +105,8 @@ const MainLayout = ({children}) => {
                             display: { xs: 'block', md: 'none' },
                         }}
                         >
-                        {Object.keys(profile_routes).map((page) => (
-                            <MenuItem key={page} component={Link} to={profile_routes[page]} onClick={handleCloseNavMenu}>
+                        {Object.keys(routes).map((page) => (
+                            <MenuItem key={page} component={Link} to={routes[page]} onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">
                                     {page}
                                 </Typography>
@@ -143,7 +140,7 @@ const MainLayout = ({children}) => {
                                 onClick={handleCloseNavMenu}
                                 component={Link}
                                 to={routes[page]}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={{ my: 2, color: 'inherit', display: 'block' }}
                             >
                                 {page}
                             </Button>
@@ -153,7 +150,7 @@ const MainLayout = ({children}) => {
                         {hasJWT() ? (
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                {localStorage.getItem("emailAddress")}
                             </IconButton>
                         </Tooltip>
                         )

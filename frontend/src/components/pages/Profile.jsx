@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import api from "../../api/api";
-import "./style.css"
 import { CircularProgress } from "@mui/material";
 import MainLayout from "./Layout";
 

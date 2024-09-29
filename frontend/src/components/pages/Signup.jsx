@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate, Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import MainLayout from "./Layout";
-import "./style.css"
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container } from '@mui/material';
+import { Avatar, Button, Link, TextField, FormControlLabel, Checkbox, Grid, Box, Typography, Container } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 
 
@@ -36,16 +35,20 @@ function Register(){
 
 
     return (
+
       <MainLayout>
-        <Container component="main" maxWidth="xs">
-          <Box 
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+      <Container component="main" maxWidth="xs">
+
+      <Box 
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          boxShadow:3,
+          p:3
+        }}
+      >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main"}}>
               <LockIcon/>
             </Avatar>
@@ -113,13 +116,13 @@ function Register(){
             >
               Sign Up
             </Button>
-            <Link to="/login">
+            <Link href="/login">
                  Already have an account? Sign In
-            </Link>
-          </Box>
-        </Container>
+            </Link>   
+            </Box>
+            </Container>
       </MainLayout>
-      
+         
     );
     
 }
