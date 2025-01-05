@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+import config
 import base64
 import io
 
@@ -26,7 +27,7 @@ def array_to_image(arr):
     return image_array
 
 def generate_image(n_images=1):
-    dir_path = "/home/nick/all-for-one/backend/models/models"
+    dir_path = config.MODELS_DIR
     file_name = "myGan.h5"
     gen = keras.models.load_model(os.path.join(dir_path, file_name))
     latent_dim = tf.random.normal(shape=[n_images, 100])

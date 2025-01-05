@@ -29,6 +29,7 @@ function Register(){
       .catch(function (error) {
         console.log(error, "error");
         if (error.response.status === 200)
+          console.log("200 error")
           alert(error.response.data.error)
       })
     };
